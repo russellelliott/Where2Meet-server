@@ -46,6 +46,32 @@ export const sendInviteEmails = async ({ senderEmail, senderName, recipientEmail
     }
 };
 
+export const sendResponseEmails = async ({ senderEmail, senderName, ownerEmail, mapName, response }) => {
+    // Email to responder
+    const responderMailOptions = {
+        from: process.env.EMAIL_FROM,
+        to: senderEmail,
+        subject: `You ${response} the invitation to ${mapName}`,
+        text: `You have ${response} the invitation to collaborate on the map "${mapName}".`
+    };
+
+    // Email to map owner
+    const ownerMailOptions = {
+        from: process.env.EMAIL_FROM,
+        to: ownerEmail,
+        subject: `${senderName} ${response} your map invitation`,
+        text: `${senderName} has ${response} your invitation to collaborate on the map "${mapName}".`
+    };
+
+    try {
+        await transporter.sendMail(responderMailOptions);
+        await transporter.sendMail(ownerMailOptions);
+    } catch (error) {
+        console.error('Error sending response emails:', error);
+        throw error;
+    }
+};
+
 export const sendWelcomeEmail = async ({ email, name }) => {
     const mailOptions = {
         from: process.env.EMAIL_FROM,

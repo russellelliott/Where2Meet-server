@@ -1,5 +1,5 @@
 import express from 'express';
-import { sendInviteEmails, sendWelcomeEmail } from './emailService.js';
+import { sendInviteEmails, sendWelcomeEmail, sendResponseEmails } from './emailService.js';
 
 const router = express.Router();
 
@@ -28,6 +28,20 @@ router.post('/welcome', async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: 'Failed to send welcome email' });
+    }
+});
+
+// Send invitation response emails
+router.post('/response', async (req, res) => {
+    const { senderEmail, senderName, ownerEmail, mapName, response } = req.body;
+    if (!senderEmail || !ownerEmail || !mapName || !response) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+    try {
+        await sendResponseEmails({ senderEmail, senderName, ownerEmail, mapName, response });
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to send response emails' });
     }
 });
 
