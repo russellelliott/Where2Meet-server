@@ -32,9 +32,9 @@ export const sendInviteEmails = async ({ senderEmail, senderName, recipientEmail
         from: process.env.EMAIL_FROM,
         to: recipientEmail,
         subject: `${senderName} invited you to collaborate on a map!`,
-        html: `<p>${senderName} has invited you to collaborate on the map <strong>${mapName}</strong>.<br>
-        <a href="${acceptUrl}">Accept Invitation</a> | <a href="${declineUrl}">Decline Invitation</a><br>
-        Or visit: <a href="${baseUrl}/map/${mapId}">${baseUrl}/map/${mapId}</a></p>`
+        html: `<p>${senderName} has invited you to collaborate on the map <strong>${mapName}</strong>.<br><br>
+        Click the link below to view the map. You'll be able to accept or decline the invitation on the map page:<br>
+        <a href="${baseUrl}/map/${mapId}">${baseUrl}/map/${mapId}</a></p>`
     };
 
     try {
