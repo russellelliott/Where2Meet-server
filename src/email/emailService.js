@@ -16,8 +16,8 @@ const transporter = nodemailer.createTransport({
 
 export const sendInviteEmails = async ({ senderEmail, senderName, recipientEmail, mapId, mapName }) => {
     const baseUrl = process.env.CLIENT_BASE_URL || 'http://localhost:3000';
-    const acceptUrl = `${baseUrl}/shared-map/${mapId}/accept`;
-    const declineUrl = `${baseUrl}/shared-map/${mapId}/decline`;
+    const acceptUrl = `${baseUrl}/map/${mapId}/accept`;
+    const declineUrl = `${baseUrl}/map/${mapId}/decline`;
 
     // Email to sender
     const senderMailOptions = {
@@ -34,7 +34,7 @@ export const sendInviteEmails = async ({ senderEmail, senderName, recipientEmail
         subject: `${senderName} invited you to collaborate on a map!`,
         html: `<p>${senderName} has invited you to collaborate on the map <strong>${mapName}</strong>.<br>
         <a href="${acceptUrl}">Accept Invitation</a> | <a href="${declineUrl}">Decline Invitation</a><br>
-        Or visit: <a href="${baseUrl}/shared-map/${mapId}">${baseUrl}/shared-map/${mapId}</a></p>`
+        Or visit: <a href="${baseUrl}/map/${mapId}">${baseUrl}/map/${mapId}</a></p>`
     };
 
     try {
